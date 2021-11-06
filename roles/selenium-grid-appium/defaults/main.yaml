@@ -1,0 +1,29 @@
+selenium_jar_path: /Users/Shared/server
+selenium_manage_jar: true
+selenium_jar_host: selenium-release.storage.googleapis.com
+selenium_version: 3.141.59
+selenium_jar_uri: "{{ selenium_version | regex_replace('\\.[0-9]+$', '') }}/selenium-server-standalone-{{ selenium_version }}.jar"
+selenium_mirror: "http://{{selenium_jar_host}}/{{selenium_jar_uri}}"
+#selenium_config_path: /Users/bqat.automayion/server/Documents/appium-Grid/config
+selenium_config_path: /tmp/config
+
+selenium_node_enabled: true
+selenium_node_proxy: org.openqa.grid.selenium.proxy.DefaultRemoteProxy
+selenium_node_max_session: 5
+selenium_node_port: 5555
+selenium_node_host: localhost
+selenium_node_register: true
+selenium_node_register_cycle: 5000
+selenium_node_hub_port: 4444
+selenium_node_hub_host: localhost
+selenium_node_status_check_timeout: 5000
+selenium_node_polling: 5000
+selenium_node_unregister_if_down_after: 60000
+selenium_node_down_polling_limit: 2
+selenium_node_debug: false
+selenium_node_servlets: []
+selenium_node_without_servlets: []
+selenium_node_custom: {}
+
+json_file: "{{ lookup('file', 'templates/node.json.j2') | to_nice_json }}"
+node_config_template: "templates/node.json.j2"

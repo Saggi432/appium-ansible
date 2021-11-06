@@ -1,0 +1,3 @@
+---
+- include: configure_nodes.yaml
+# - include: start_appium_nodes.yaml

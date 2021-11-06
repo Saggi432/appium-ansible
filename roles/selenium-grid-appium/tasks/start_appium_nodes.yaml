@@ -1,0 +1,26 @@
+---
+- name: set fact to get hostname
+  set_fact:
+    remote_host_port: "{{ item.value.port_appium_remote }}"
+
+
+- name: Check all port numbers are accessible from current host
+  command: "nc -vz localhost {{ item.value.port_appium_remote }}"
+  failed_when: false
+  register: results_appium
+
+
+
+- name: Print the gateway for each host when defined
+  ansible.builtin.debug:
+    msg: results are {{results_appium.rc}}  and remote host port is {{remote_host_port}}
+
+- name: Print the 
+  script: rerun-appium.sh {{remote_host_port}} {{selenium_config_path}}
+  when: results_appium.rc == 1
+    
+
+#- name: Start appium server if not started
+#  script: rerun-appium.sh {{ item.item }} {{selenium_config_path}}
+#  when: item.rc == 1
+#  with_items: "{{ results_appium.results }}"

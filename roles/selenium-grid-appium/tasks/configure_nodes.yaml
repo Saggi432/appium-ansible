@@ -1,0 +1,41 @@
+---
+ - name: set fact to get hostname
+   set_fact:
+     remote_host_ip: '{{ansible_ssh_host}}'
+   
+ - include_vars:
+     file: host_specs.yaml
+
+ - name: Display Dictionary
+   ansible.builtin.debug: 
+     msg: "The dictionary is {{ item.key }}"
+   with_dict:
+     - "{{ servers }}"
+   when: item.key == remote_host_ip
+  
+
+
+ - include_tasks: configure_appium_mac.yaml
+ 
+   with_dict:
+     - "{{ servers }}"
+   when: item.key == remote_host_ip
+
+ - include_tasks: start_appium_nodes.yaml
+ 
+   with_dict:
+     - "{{ servers }}"
+   when: item.key == remote_host_ip
+
+# when servers.key ==
+      
+
+
+ #- include_tasks: configure_appium_mac.yaml
+ #  with_items:
+ #     - {phone_name: 'iPhone X' , port_appium_remote: 4724, wda_port_appium_remote: 5724 , os_version: '12.0', ip_address: 'someone'}
+ #     - {phone_name: 'iPhone X' , port_appium_remote: 4724, wda_port_appium_remote: 5724 , os_version: '12.0', ip_address: 'someone'}
+ #     - {phone_name: 'iPhone X' , port_appium_remote: 4724, wda_port_appium_remote: 5724 , os_version: '12.0', ip_address: 'one'}
+ #     - {phone_name: 'iPhone X' , port_appium_remote: 4724, wda_port_appium_remote: 5724 , os_version: '12.0', ip_address: 'two'}
+ #  when: item.ip_address == "someone"
+
